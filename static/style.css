@@ -1,0 +1,20 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: sans-serif; 
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 50%; 
+    max-width: 300px; 
+  }
+  
+  th, td {
+    border: 1px solid black;
+    text-align: center;
+    padding: 12px; 
+    font-size: 18px; 
+  }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prayer Times</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<table>
+  <tr>
+    <th></th>
+    <th>Athan</th>
+    <th>Iqama</th>
+  </tr>
+  {% for prayer, (athan, iqama) in today.items() %}
+  <tr>
+    <td>{{ prayer }}</td>
+    <td>{{ athan }}</td>
+    <td>{{ iqama }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
