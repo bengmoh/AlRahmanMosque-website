@@ -10,8 +10,22 @@ with open("today.csv") as file:
         prayer, athan, iqama = row
         today[prayer] = (athan, iqama)
     
-
 @app.route('/')
-def home():
-    return render_template("home.html", today=today)  
+def index():
+    return render_template("prayer_times.html", today=today)
+
+@app.route('/prayer-times')
+def prayer_times():
+    return render_template("prayer_times.html", today=today)
+
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
+
+@app.route('/donate')
+def donate():
+    return render_template("donate.html")
+
+if __name__=="__main__":
+    app.run(debug=True)
     

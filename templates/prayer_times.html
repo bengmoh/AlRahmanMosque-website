@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Prayer Times</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Prayer Times{% endblock %}
+{% block content %}
 <table>
   <tr>
     <th></th>
@@ -19,6 +15,4 @@
   </tr>
   {% endfor %}
 </table>
-
-</body>
-</html>
+{% endblock %}

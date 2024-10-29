@@ -1,3 +1,5 @@
+#!/Users/macbook/projects/MosqueWebsite/.venv/bin/python3
+
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -25,7 +27,7 @@ def main(url):
             "Isha": columns[6].text.strip()
         }
 
-    with open("tomorrow.csv", "w", newline="") as file:
+    with open("/Users/macbook/projects/MosqueWebsite/tomorrow.csv", "w", newline="") as file:
         writer = csv.writer(file)
         for prayer, athan in athan_times.items():
             writer.writerow([prayer, athan, iqama(prayer, athan)])
