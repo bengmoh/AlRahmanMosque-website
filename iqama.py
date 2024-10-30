@@ -8,7 +8,7 @@ def iqama(prayer: str, athan: str) -> str:
         case "Asr":
             return add_time(athan, 10) # iqama between 10 and 10+15=25 min from athan
         case "Maghrib":
-            return add_time(athan, 5, round_to_next_quarter=False) # iqama exactly 5 min after athan
+            return add_time(athan, 8, round_to_next_quarter=False) # iqama exactly 5 min after athan
         case "Isha":
             return add_time(athan, 15) # iqama between 15 and 30 min from athan
 
