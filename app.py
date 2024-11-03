@@ -1,7 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 import csv
 
 app = Flask(__name__)
+
+@app.before_request
+def redirect_non_www():
+    if request.host.startswith('www.'):
+        return None  # Continue with the request if it's already on www.
+
+    # Redirect to the www. subdomain
+    new_url = request.url.replace('://', '://www.')
+    return redirect(new_url, code=301)
 
 today = {}
 with open("today.csv") as file:
