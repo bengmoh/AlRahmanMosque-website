@@ -3,7 +3,7 @@
 cd /Users/macbook/projects/MosqueWebsite
 
 # Pull latest changes from remote
-git pull origin main 
+git pull 
 
 # Copy tomorrow.csv to today.csv
 if ! cp tomorrow.csv today.csv; then
