@@ -82,3 +82,10 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
+@media (max-width: 600px) { 
+  table { 
+    display: block;
+    overflow-x: auto;
+  }
+}
