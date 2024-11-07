@@ -1,18 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Prayer Times{% endblock %}
 {% block content %}
+
+<!-- Opening and Closing Times -->
+<div class="info-wrapper">
+  <div class="info-box">
+    <strong>Opens:</strong> 5:45 AM
+  </div>
+  <div class="info-box">
+    <strong>Closes:</strong> 8:00 PM
+  </div>
+</div>
+
+<!-- Prayer Times Table -->
 <table>
   <tr>
     <th></th>
-    <th>Athan</th>
+    <th>Begins</th>
     <th>Iqama</th>
   </tr>
-  {% for prayer, (athan, iqama) in today.items() %}
+  {% for prayer, (begins, iqama) in today.items() %}
   <tr>
     <td>{{ prayer }}</td>
-    <td>{{ athan }}</td>
+    <td>{{ begins }}</td>
     <td>{{ iqama }}</td>
   </tr>
   {% endfor %}
 </table>
+
+<!-- Jumu'a Times -->
+<div class="info-wrapper">
+  <div class="info-box">
+    <strong>1st Jumu'a:</strong><br> 12:15 PM
+  </div>
+  <div class="info-box">
+    <strong>2nd Jumu'a:</strong><br> 1:15 PM
+  </div>
+</div>
+
 {% endblock %}
