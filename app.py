@@ -13,7 +13,7 @@ def redirect_non_www():
     return redirect(new_url, code=301)
 
 today = {}
-with open("today.csv") as file:
+with open("data/prayer_times/today_prayer_times.csv") as file:
     reader = csv.reader(file)
     for row in reader:
         prayer, athan, iqama = row

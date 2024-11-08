@@ -21,13 +21,13 @@ fi
 env > /tmp/cron_env.txt
 
 # Run the scraper and check for errors
-if ! python scraper.py > /tmp/cron_output.txt 2>&1; then
+if ! python python_scripts/scraper.py > /tmp/cron_output.txt 2>&1; then
   echo "Error running scraper.py!" >> /tmp/cron_error.log
   exit 1
 fi
 
 # Commit changes
-git add tomorrow.csv
+git add data/prayer_times/tomorrow_prayer_times.csv
 
 if ! git commit --amend --no-edit; then
   echo "Error committing changes!" >> /tmp/cron_error.log

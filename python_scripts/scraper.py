@@ -26,7 +26,7 @@ def main(url):
             "Isha": columns[6].text.strip()
         }
 
-    with open("/Users/macbook/projects/MosqueWebsite/tomorrow.csv", "w", newline="") as file:
+    with open("data/prayer_times/tomorrow_prayer_times.csv", "w", newline="") as file:
         writer = csv.writer(file)
         for prayer, athan in athan_times.items():
             writer.writerow([prayer, athan, iqama(prayer, athan)])
