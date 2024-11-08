@@ -1,16 +1,16 @@
-def iqama(prayer: str, begins: str) -> str:
-    """return iqama time given prayer and 'begins' time"""
+def iqama(prayer: str, athan: str) -> str:
+    """return iqama time given prayer and athan time"""
     match prayer:
         case "Fajr":
-            return add_time(begins, 15) # iqama between 15 and 15+15=30 min from athan
+            return add_time(athan, 15) # iqama after at least 15 minutes from the athan
         case "Dhuhr":
-            return add_time(begins, 15) # iqama between 15 and 15+15=30 min from athan
+            return add_time(athan, 15) 
         case "Asr":
-            return add_time(begins, 10) # iqama between 10 and 10+15=25 min from athan
+            return add_time(athan, 15) 
         case "Maghrib":
-            return add_time(begins, 8, round_to_next_quarter=False) # iqama exactly 5 min after athan
+            return add_time(athan, 8, round_to_next_quarter=False) 
         case "Isha":
-            return add_time(begins, 15) # iqama between 15 and 30 min from athan
+            return add_time(athan, 15)
         case _:
             return None # handles Sunrise because it has no Iqama
 

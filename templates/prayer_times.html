@@ -19,10 +19,10 @@
     <th>Begins</th>
     <th>Iqama</th>
   </tr>
-  {% for prayer, (begins, iqama) in today.items() %}
+  {% for prayer, (athan, iqama) in today.items() %}
   <tr>
     <td>{{ prayer }}</td>
-    <td>{{ begins }}</td>
+    <td>{{ athan }}</td>
     <td>{{ iqama }}</td>
   </tr>
   {% endfor %}

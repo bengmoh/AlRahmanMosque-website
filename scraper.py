@@ -1,7 +1,7 @@
-import requests
 from bs4 import BeautifulSoup
-import csv
 from iqama import *
+import requests, csv
+
 
 def main(url):
     response = requests.get(url)
@@ -9,15 +9,15 @@ def main(url):
 
     soup = BeautifulSoup(response.content, "html.parser")
 
-    # Find the 'Begins' times table
-    begins_times_table = soup.find("table", class_="prayertimerange")
+    # Find the athan times table
+    athan_times_table = soup.find("table", class_="prayertimerange")
 
-    # Extract 'Begins' times for tomorrow
-    begins_times = {}
-    if begins_times_table:
-        row = begins_times_table.find("tbody").find_all("tr")[1]  # Get the 2nd row
+    # Extract athan times for tomorrow
+    athan_times = {}
+    if athan_times_table:
+        row = athan_times_table.find("tbody").find_all("tr")[1]  # Get the 2nd row
         columns = row.find_all("td")
-        begins_times = {
+        athan_times = {
             "Fajr": columns[1].text.strip(),
             "Sunrise": columns[2].text.strip(),
             "Dhuhr": columns[3].text.strip(),
@@ -28,8 +28,9 @@ def main(url):
 
     with open("/Users/macbook/projects/MosqueWebsite/tomorrow.csv", "w", newline="") as file:
         writer = csv.writer(file)
-        for prayer, begins in begins_times.items():
-            writer.writerow([prayer, begins, iqama(prayer, begins)])
+        for prayer, athan in athan_times.items():
+            writer.writerow([prayer, athan, iqama(prayer, athan)])
+
 
 if __name__=="__main__":
     url = "https://timesprayer.com/en/prayer-times-in-toronto-m2j0t1.html"

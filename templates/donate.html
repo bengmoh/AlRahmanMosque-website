@@ -1,6 +1,43 @@
 {% extends "base.html" %}
 {% block title %}Donate{% endblock %}
 {% block content %}
-  <h2>Donate to the Mosque of Allah</h2>
-  <p>Support this Mosque by making an e-transfer to <b>alrahmanmosque2023@gmail.com</b></p>
-  {% endblock %}
+  <h2>Support the Mosque of Allah</h2>
+
+  <p><b>Make an e-transfer to:</b> 
+    <button id="copyButton" onclick="copyEmail()">alrahmanmosque2023@gmail.com</button> 
+    <span id="copyMessage" style="display: none; color: green;">Copied!</span>
+  </p> 
+  
+  <p>
+    This Mosque is a vital place, especially for TMU (Toronto Metropolitan University) students and the surrounding community. 
+    Its convenient <a id="address" href="https://maps.app.goo.gl/2MQMjdsK3JfgQUrS9" target="_blank" style="color: #1b6500;"><b>location</b></a> allows students to easily attend prayers, 
+    even between classes, helping them commit to prayer and protect their deen.
+  </p>
+
+  <p>
+    Currently, we are renting this space and facing a rent of <b>over $5,000 CAD monthly</b>. Your generous donations will help us cover this essential cost 
+    and ensure that the Mosque remains open and accessible to all.
+  </p>
+
+  <p>
+    Ultimately, our goal is to purchase this property and establish a permanent place of worship for generations to come. 
+    While meeting our monthly rent is the immediate priority, any additional funds will be dedicated towards this long-term vision.
+  </p>
+
+  <p>
+    Every contribution, no matter the size, makes a difference. We especially encourage those who can to commit to <b><span style="border-bottom: 3px solid;">consistent</span> monthly donations</b> 
+    to help us maintain the Mosque's operations and work towards securing its future. 
+  </p>
+
+  <p>May Allah reward you for your generosity.</p> 
+  
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText("alrahmanmosque2023@gmail.com");
+      document.getElementById("copyMessage").style.display = "inline";
+      setTimeout(function() {
+        document.getElementById("copyMessage").style.display = "none";
+      }, 2000); // Message disappears after 2 seconds
+    }
+  </script>
+{% endblock %}

@@ -42,7 +42,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #007bff;
+  color: #1b6500;
 }
 
 /* Main content styles */
@@ -51,6 +51,17 @@ main {
   max-width: 800px;
   margin: 0 auto;
   padding-bottom: 80px;
+  text-align: center;
+}
+
+p #address {
+  text-decoration: none;
+  color: inherit;
+}
+
+p #address:hover {
+  color: #1b6500;
+  text-decoration: underline;
 }
 
 /* Info wrapper to align boxes side by side */
