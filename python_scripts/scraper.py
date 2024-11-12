@@ -29,6 +29,8 @@ def main(url):
     with open("data/prayer_times/tomorrow_prayer_times.csv", "w", newline="") as file:
         writer = csv.writer(file)
         for prayer, athan in athan_times.items():
+            if prayer not in ("Fajr", "Sunrise"):
+                athan = add_time(athan, 2, round_to_next_quarter=False)
             writer.writerow([prayer, athan, iqama(prayer, athan)])
 
 
