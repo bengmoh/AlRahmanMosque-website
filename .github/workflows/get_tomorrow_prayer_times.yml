@@ -2,23 +2,25 @@ name: Tomorrow Prayer Times Daily Update
 
 on:
   schedule:
-    # Schedule to run daily at 7:00 PM Toronto time (midnight UTC)
-    - cron: '0 12 * * *'
+    # Schedule to run daily at 10:30 AM UTC (5:30 AM Toronto time)
+    - cron: '30 10 * * *'
 
 jobs:
   run_scraper:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout the repository with full history
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensure full commit history is fetched
 
       # Step 2: Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13  # Match the Python version used locally
+          python-version: 3.13
 
       # Step 3: Install dependencies
       - name: Install Dependencies
@@ -33,7 +35,12 @@ jobs:
           source .venv/bin/activate
           python python_scripts/scraper.py
 
-      # Step 5: Commit and push changes
+      # Step 5: Configure Git and Commit Changes
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
