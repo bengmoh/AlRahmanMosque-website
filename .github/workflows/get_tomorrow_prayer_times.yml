@@ -1,0 +1,43 @@
+name: Tomorrow Prayer Times Daily Update
+
+on:
+  schedule:
+    # Schedule to run daily at 7:00 PM Toronto time (midnight UTC)
+    - cron: '0 12 * * *'
+
+jobs:
+  run_scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13  # Match the Python version used locally
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      # Step 4: Run scraper.py
+      - name: Run Scraper
+        run: |
+          source .venv/bin/activate
+          python python_scripts/scraper.py
+
+      # Step 5: Commit and push changes
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add data/prayer_times/tomorrow_prayer_times.csv
+          git commit --amend --no-edit
+          git push -f
