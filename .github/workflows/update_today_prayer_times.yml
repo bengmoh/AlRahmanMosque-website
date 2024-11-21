@@ -1,0 +1,35 @@
+name: Today Prayer Times Daily Update
+
+on:
+  schedule:
+    # Schedule to run every day at 6:30 PM Toronto time (UTC offset considered)
+    - cron: '30 23 * * *'
+
+jobs:
+  update_csv:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Configure Git
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      # Step 3: Replace `today.csv` with `tomorrow.csv`
+      - name: Replace CSV
+        run: |
+          cp data/prayer_times/tomorrow_prayer_times.csv data/prayer_times/today_prayer_times.csv
+
+      # Step 4: Stage, Commit, and Push Changes
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add data/prayer_times/today_prayer_times.csv
+          git commit --amend --no-edit
+          git push -f
