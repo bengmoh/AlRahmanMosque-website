@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from python_scripts.calculations import add_time
 import csv
 
 app = Flask(__name__)
@@ -18,10 +19,14 @@ with open("data/prayer_times/today_prayer_times.csv") as file:
     for row in reader:
         prayer, athan, iqama = row
         today[prayer] = (athan, iqama)
+    opening_time = add_time(today["Fajr"][1], -15, round_to_quarter=False)
+    closing_time = add_time(today["Isha"][1], 60, round_to_quarter=False)
     
 @app.route('/')
 def index():
-    return render_template("prayer_times.html", today=today)
+    return render_template("prayer_times.html", today=today,
+                           opening_time=opening_time,
+                           closing_time=closing_time)
 
 @app.route('/prayer-times')
 def prayer_times():

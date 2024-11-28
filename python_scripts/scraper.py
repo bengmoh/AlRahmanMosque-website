@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from iqama import *
+from calculations import *
 import requests, csv
 
 
@@ -30,7 +30,7 @@ def main(url):
         writer = csv.writer(file)
         for prayer, athan in athan_times.items():
             if prayer not in ("Fajr", "Sunrise"):
-                athan = add_time(athan, 2, round_to_next_quarter=False)
+                athan = add_time(athan, 2, round_to_quarter=False)
             writer.writerow([prayer, athan, iqama(prayer, athan)])
 
 
