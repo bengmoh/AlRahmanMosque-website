@@ -1,50 +1,55 @@
-name: Tomorrow Prayer Times Daily Update
-
+name: Tomorrow Prayer Times Update
 on:
   schedule:
-    # Schedule to run daily at 10:30 AM UTC (5:30 AM Toronto time)
+    # Runs daily at 10:30 AM UTC (5:30 AM Toronto time)
     - cron: '30 10 * * *'
 
 jobs:
-  run_scraper:
+  update_tomorrow_csv:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository with full history
+      # Checkout with minimal history since we're only updating the last commit
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensure full commit history is fetched
+          fetch-depth: 1
 
-      # Step 2: Set up Python environment
+      # Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13
+          python-version: '3.13'
+          cache: 'pip'  # Caches pip dependencies for faster runs
 
-      # Step 3: Install dependencies
+      # Install dependencies in virtual environment
       - name: Install Dependencies
         run: |
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
 
-      # Step 4: Run scraper.py
-      - name: Run Scraper
+      # Run the scraper to update tomorrow's prayer times
+      - name: Run Prayer Times Scraper
         run: |
           source .venv/bin/activate
           python python_scripts/scraper.py
 
-      # Step 5: Configure Git and Commit Changes
+      # Configure Git with bot identity
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Commit and Push Changes
+      # Update the repository without creating new commits
+      - name: Update Repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Stage the updated CSV file
           git add data/prayer_times/tomorrow_prayer_times.csv
+          
+          # Amend the last commit, keeping its message
           git commit --amend --no-edit
-          git push -f
+          
+          # Force push to update remote without new commit
+          git push -f origin main

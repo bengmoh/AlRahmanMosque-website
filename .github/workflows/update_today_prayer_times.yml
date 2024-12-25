@@ -1,37 +1,36 @@
-name: Today Prayer Times Daily Update
-
+name: Today Prayer Times Update
 on:
   schedule:
-    # Schedule to run daily at 11:30 PM UTC (6:30 PM Toronto time)
+    # Runs daily at 11:30 PM UTC (6:30 PM Toronto time)
     - cron: '30 23 * * *'
 
 jobs:
   update_today_csv:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository with full history
+      # Checkout with minimal history since we're only updating the last commit
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensure full commit history is fetched
+          fetch-depth: 1
 
-      # Step 2: Configure Git
+      # Configure Git with bot identity
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      # Step 3: Replace `today_prayer_times.csv` with `tomorrow_prayer_times.csv`
-      - name: Replace CSV
-        run: |
-          cp data/prayer_times/tomorrow_prayer_times.csv data/prayer_times/today_prayer_times.csv
-
-      # Step 4: Commit and Push Changes
-      - name: Commit and Push Changes
+      # Update the CSV file and amend the last commit
+      - name: Update Today's Prayer Times
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+        run: |          
+          # Copy tomorrow's times to today's file
+          cp data/prayer_times/tomorrow_prayer_times.csv data/prayer_times/today_prayer_times.csv
+          
+          # Amend the last commit, keeping its message
           git add data/prayer_times/today_prayer_times.csv
           git commit --amend --no-edit
-          git push -f
+          
+          # Force push to update remote without new commit
+          git push -f origin main
