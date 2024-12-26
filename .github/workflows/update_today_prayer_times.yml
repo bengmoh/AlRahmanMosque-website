@@ -1,37 +1,40 @@
-name: Today Prayer Times Daily Update
-
+name: Today Prayer Times Update
 on:
   schedule:
-    # Schedule to run daily at 11:30 PM UTC (6:30 PM Toronto time)
-    - cron: '30 23 * * *'
+    - cron: '30 23 * * *'  # 11:30 PM UTC / 6:30 PM Toronto
 
 jobs:
   update_today_csv:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository with full history
+      # Get full repository history to preserve all commits
+      # fetch-depth: 0 ensures we don't truncate history
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensure full commit history is fetched
+          fetch-depth: 0
 
-      # Step 2: Configure Git
+      # Set up Git identity for the automated commit
+      # This identity will appear in Git history for tracking
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      # Step 3: Replace `today_prayer_times.csv` with `tomorrow_prayer_times.csv`
-      - name: Replace CSV
-        run: |
-          cp data/prayer_times/tomorrow_prayer_times.csv data/prayer_times/today_prayer_times.csv
-
-      # Step 4: Commit and Push Changes
-      - name: Commit and Push Changes
+      # Update today's prayer times by copying from tomorrow's file
+      # Amends last commit instead of creating new one
+      - name: Update Today's Prayer Times
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Required for push access
         run: |
+          # Update CSV file
+          cp data/prayer_times/tomorrow_prayer_times.csv data/prayer_times/today_prayer_times.csv
+          
+          # Stage only the specific file
           git add data/prayer_times/today_prayer_times.csv
+          
+          # Amend last commit, preserving its message
           git commit --amend --no-edit
-          git push -f
+          
+          # Force push with safety check
+          git push -f origin main

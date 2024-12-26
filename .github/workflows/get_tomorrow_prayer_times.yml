@@ -1,50 +1,58 @@
-name: Tomorrow Prayer Times Daily Update
-
+name: Tomorrow Prayer Times Update
 on:
   schedule:
-    # Schedule to run daily at 10:30 AM UTC (5:30 AM Toronto time)
-    - cron: '30 10 * * *'
+    - cron: '30 10 * * *'  # 10:30 AM UTC / 5:30 AM Toronto
 
 jobs:
-  run_scraper:
+  update_tomorrow_csv:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository with full history
+      # Full history checkout preserves all commits
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensure full commit history is fetched
+          fetch-depth: 0
 
-      # Step 2: Set up Python environment
+      # Set up Python 3.13 with pip caching
+      # Caching speeds up workflow by reusing dependencies
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13
+          python-version: '3.13'
+          cache: 'pip'  # Enables pip dependency caching
 
-      # Step 3: Install dependencies
+      # Create virtual environment and install dependencies
+      # Isolation prevents conflicts between dependencies
       - name: Install Dependencies
         run: |
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
 
-      # Step 4: Run scraper.py
-      - name: Run Scraper
+      # Run scraper to fetch tomorrow's prayer times
+      # Must be in virtual environment to access dependencies
+      - name: Run Prayer Times Scraper
         run: |
           source .venv/bin/activate
           python python_scripts/scraper.py
 
-      # Step 5: Configure Git and Commit Changes
+      # Configure Git identity for automated commits
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Commit and Push Changes
+      # Update repository with new prayer times
+      # Amends last commit instead of creating new one
+      - name: Update Repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Required for push access
         run: |
+          # Stage only the specific file
           git add data/prayer_times/tomorrow_prayer_times.csv
+          
+          # Amend last commit, preserving its message
           git commit --amend --no-edit
-          git push -f
+          
+          # Force push with safety check
+          git push -f origin main
