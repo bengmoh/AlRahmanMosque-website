@@ -2,6 +2,7 @@ name: Today Prayer Times Update
 on:
   schedule:
     - cron: '30 23 * * *'  # 11:30 PM UTC / 6:30 PM Toronto
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   update_today_csv:
