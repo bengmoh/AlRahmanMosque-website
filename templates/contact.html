@@ -1,8 +1,88 @@
 {% extends "base.html" %}
-{% block title %}Contact Us{% endblock %}
+{% block title %}Contact Us - Al-Rahman Mosque{% endblock %}
+
 {% block content %}
-  <h2>Contact Information</h2>
-  <p><b>Email</b>: alrahmanmosque2023@gmail.com</p>
-  <p><b>Phone</b> (647)913-2867</p>
-  <p><b>Address</b>: <a id="address" href="https://maps.app.goo.gl/2MQMjdsK3JfgQUrS9" target="_blank">98 Bond St, Toronto, ON M5B 1C7</a></p>
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <!-- Main Contact Card -->
+        <div class="bg-white rounded-lg shadow-lg p-8 border-t-4 border-mosque-gold">
+            <h2 class="text-2xl font-bold mb-8 text-mosque-green text-center">Contact Information</h2>
+            
+            <div class="space-y-6">
+                <!-- Email Contact -->
+                <a href="mailto:alrahmanmosque2023@gmail.com" 
+                   class="flex items-center space-x-4 p-4 rounded-lg hover:bg-mosque-cream/10 transition-colors group">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-mosque-cream flex items-center justify-center">
+                        <span class="text-mosque-green text-2xl">📧</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-mosque-green">Email</h3>
+                        <p class="text-gray-600 group-hover:text-mosque-green transition-colors">
+                            alrahmanmosque2023@gmail.com
+                        </p>
+                    </div>
+                    <div class="text-mosque-green opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+                        Click to email →
+                    </div>
+                </a>
+
+                <!-- Phone Contact -->
+                <a href="tel:+16479132867" 
+                   class="flex items-center space-x-4 p-4 rounded-lg hover:bg-mosque-cream/10 transition-colors group">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-mosque-cream flex items-center justify-center">
+                        <span class="text-mosque-green text-2xl">📞</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-mosque-green">Phone</h3>
+                        <p class="text-gray-600 group-hover:text-mosque-green transition-colors">
+                            (647) 913-2867
+                        </p>
+                    </div>
+                    <div class="text-mosque-green opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+                        Click to call →
+                    </div>
+                </a>
+
+                <!-- Location -->
+                <a href="https://maps.app.goo.gl/2MQMjdsK3JfgQUrS9" 
+                   target="_blank"
+                   rel="noopener noreferrer" 
+                   class="flex items-center space-x-4 p-4 rounded-lg hover:bg-mosque-cream/10 transition-colors group">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-mosque-cream flex items-center justify-center">
+                        <span class="text-mosque-green text-2xl">📍</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-mosque-green">Location</h3>
+                        <p class="text-gray-600 group-hover:text-mosque-green transition-colors">
+                            98 Bond St, Toronto, ON M5B 1C7
+                        </p>
+                    </div>
+                    <div class="text-mosque-green opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+                        Open in Maps →
+                    </div>
+                </a>
+
+                <!-- Hours -->
+                <div class="flex items-center space-x-4 p-4 rounded-lg bg-mosque-cream/5">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-mosque-cream flex items-center justify-center">
+                        <span class="text-mosque-green text-2xl">🕒</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-semibold text-mosque-green">Hours</h3>
+                        <div class="grid grid-cols-2 gap-4 mt-2">
+                            <div>
+                                <p class="text-sm text-gray-600">Opening</p>
+                                <p class="text-mosque-green">{{ opening_time }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Closing</p>
+                                <p class="text-mosque-green">{{ closing_time }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
