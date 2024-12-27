@@ -1,3 +1,6 @@
+from typing import Dict, Tuple, Optional
+import csv 
+
 def iqama(prayer: str, athan: str) -> str:
     """return iqama time given prayer and athan time"""
     match prayer:
@@ -8,7 +11,7 @@ def iqama(prayer: str, athan: str) -> str:
         case "Asr":
             return add_time(athan, 15) 
         case "Maghrib":
-            return add_time(athan, 8, round_to_quarter=False) 
+            return add_time(athan, 5, round_to_quarter=False) 
         case "Isha":
             return add_time(athan, 15)
         case _:
@@ -42,3 +45,34 @@ def quarter(h: str, m: str):
     else:
         m = "00" if m == "00" else "15" if m <= "15" else "30" if m <= "30" else "45"
     return h, m
+
+
+def compare_iqama_times(today_file: str, tomorrow_file: str) -> Optional[Dict[str, Tuple[str, str]]]:
+    """
+    Compare today's and tomorrow's prayer times to detect changes.
+    Returns a dictionary of changes with prayer name as key and (old_time, new_time) as value.
+    """
+    def read_times(file_path: str) -> dict:
+        times = {}
+        try:
+            with open(file_path) as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    prayer, _, iqama = row
+                    times[prayer] = iqama
+        except FileNotFoundError:
+            return {}
+        return times
+
+    today_times = read_times(today_file)
+    tomorrow_times = read_times(tomorrow_file)
+    
+    if not today_times or not tomorrow_times:
+        return None
+
+    changes = {}
+    for prayer in today_times:
+        if prayer in tomorrow_times and today_times[prayer] != tomorrow_times[prayer]:
+            changes[prayer] = (today_times[prayer], tomorrow_times[prayer])
+    
+    return changes if changes else None

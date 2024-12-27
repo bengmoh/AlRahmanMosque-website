@@ -1,43 +1,187 @@
 {% extends "base.html" %}
-{% block title %}Donate{% endblock %}
+{% block title %}Donate - Al-Rahman Mosque{% endblock %}
+
 {% block content %}
-  <h2>Support the Mosque of Allah</h2>
+<!-- Hero Section -->
+<div class="bg-gradient-to-b from-mosque-green to-mosque-dark text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold mb-4">Support Al-Rahman Mosque</h1>
+        <p class="text-xl text-gray-200 max-w-2xl mx-auto">
+            Choose your preferred donation method
+        </p>
+    </div>
+</div>
 
-  <p><b>Make an e-transfer to:</b> 
-    <button id="copyButton" onclick="copyEmail()">alrahmanmosque2023@gmail.com</button> 
-    <span id="copyMessage" style="display: none; color: green;">Copied!</span>
-  </p> 
-  
-  <p>
-    This Mosque is a vital place, especially for TMU (Toronto Metropolitan University) students and the surrounding community. 
-    Its convenient <a id="address" href="https://maps.app.goo.gl/2MQMjdsK3JfgQUrS9" target="_blank" style="color: #1b6500;"><b>location</b></a> allows students to easily attend prayers, 
-    even between classes, helping them commit to prayer and protect their deen.
-  </p>
+<div class="container mx-auto px-4 py-12">
+    <!-- Donation Methods Grid -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <!-- E-transfer Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-bold mb-6 text-mosque-green text-center">E-transfer</h2>
+            <div class="flex flex-col items-center">
+                <!-- Benefits List -->
+                <div class="mb-4 text-gray-600 w-full text-center">
+                    <p class="mb-2">✓ Direct bank transfer (online banking)</p>
+                    <p class="mb-2">✓ No processing fees</p>
+                    <p>✓ Recurrent and one-time options</p>
+                </div>
 
-  <p>
-    Currently, we are renting this space and facing a rent of <b>over $5,000 CAD monthly</b>. Your generous donations will help us cover this essential cost 
-    and ensure that the Mosque remains open and accessible to all.
-  </p>
+                <!-- E-transfer Interface -->
+                <div class="w-full mt-2 relative">
+                    <div class="relative bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
+                        <input type="text" 
+                               value="alrahmanmosque2023@gmail.com" 
+                               class="w-full px-4 py-3 bg-transparent text-gray-800 pr-24"
+                               readonly>
+                        
+                        <button onclick="copyEmail()" 
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-mosque-green text-white rounded hover:bg-mosque-light transition-colors">
+                            Copy Email
+                        </button>
+                    </div>
+                    
+                    <!-- Copy Success Message -->
+                    <div id="copyMessage" 
+                         class="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-mosque-green text-white text-sm px-3 py-1 rounded-full opacity-0 transition-opacity duration-200 pointer-events-none">
+                        Email copied!
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <p>
-    Ultimately, our goal is to purchase this property and establish a permanent place of worship for generations to come. 
-    While meeting our monthly rent is the immediate priority, any additional funds will be dedicated towards this long-term vision.
-  </p>
+        <!-- Online Payment Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-bold mb-6 text-mosque-green text-center">Online Payment</h2>
+            <div class="flex flex-col items-center">
+                <!-- Benefits List -->
+                <div class="mb-4 text-gray-600 w-full text-center">
+                    <p class="mb-2">✓ Credit/Debit cards</p>
+                    <p class="mb-2">✓ Secure processing</p>
+                    <p>✓ Automated receipts</p>
+                </div>
+                
+                <!-- Disabled Payment Button -->
+                <div class="relative group">
+                    <div class="flex items-center px-6 py-3 bg-mosque-green/50 rounded-lg select-none" 
+                         aria-disabled="true">
+                        <img src="https://donorbox.org/images/white_logo.svg" 
+                             alt=""
+                             class="w-6 h-6 opacity-50"
+                             aria-hidden="true">
+                        <span class="ml-2 text-white/70 font-medium">Donate</span>
+                        
+                        <!-- Coming Soon Indicator -->
+                        <span class="absolute -top-2 -right-2 bg-mosque-gold/90 text-white text-xs px-2 py-0.5 rounded-full">
+                            Coming Soon
+                        </span>
+                    </div>
+                    
+                    <!-- Info Tooltip -->
+                    <div class="absolute left-1/2 -translate-x-1/2 -bottom-12 w-48 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        Online donations will be available soon.
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
+                    </div>
+                </div>
 
-  <p>
-    Every contribution, no matter the size, makes a difference. We especially encourage those who can to commit to <b><span style="border-bottom: 3px solid;">consistent</span> monthly donations</b> 
-    to help us maintain the Mosque's operations and work towards securing its future. 
-  </p>
+                <!-- Status Message -->
+                <p class="mt-4 text-sm text-gray-500 text-center max-w-sm">
+                    Online donation system is currently being set up.
+                </p>
+            </div>
+        </div>
+    </div>
 
-  <p>May Allah reward you for your generosity.</p> 
-  
-  <script>
-    function copyEmail() {
-      navigator.clipboard.writeText("alrahmanmosque2023@gmail.com");
-      document.getElementById("copyMessage").style.display = "inline";
-      setTimeout(function() {
-        document.getElementById("copyMessage").style.display = "none";
-      }, 2000); // Message disappears after 2 seconds
-    }
-  </script>
+    <!-- Section Divider -->
+    <div class="relative py-4 mb-12">
+        <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center">
+            <span class="bg-gray-50 px-4 text-sm text-gray-500">Why Your Donation is Needed</span>
+        </div>
+    </div>
+
+    <!-- Information Cards -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <!-- Student Support Card -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-mosque-cream flex items-center justify-center">
+                    <span class="text-2xl">🏫</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-mosque-green">Protect Students' Religion</h3>
+                </div>
+            </div>
+            <p class="text-gray-600">
+                This Masjid provides Toronto Metropolitan University students and the surrounding
+                community with a convenient space for prayer. Students can pray even between their classes
+                because this Mosque is very close to them compared to other Mosques. 
+                Your donation can be the difference between a student commiting to pray in Masjid and not.
+            </p>
+        </div>
+
+        <!-- Monthly Expenses Card -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-mosque-cream flex items-center justify-center">
+                    <span class="text-2xl">🏢</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-mosque-green">Cover Monthly Rent</h3>
+                </div>
+            </div>
+            <p class="text-gray-600">
+                This Masjid currently faces a monthly rent of over $5,000 CAD. Your generous 
+                donation ensures we can maintain this essential space for our community, while working towards
+                our objective: Buying the place and establishing a permanent Masjid for generations to come.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Email Copy Functionality -->
+<script>
+function copyEmail() {
+    const email = "alrahmanmosque2023@gmail.com";
+    navigator.clipboard.writeText(email).then(() => {
+        const message = document.getElementById('copyMessage');
+        // Show message
+        message.style.opacity = '1';
+        
+        // Hide message after delay
+        setTimeout(() => {
+            message.style.opacity = '0';
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy email:', err);
+        // Fallback for clipboard API failure
+        const input = document.createElement('input');
+        input.value = email;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+    });
+}
+</script>
+
+<!-- Styling Enhancements -->
+<style>
+/* Smooth transitions */
+.transition-opacity {
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Tooltip animations */
+.group:hover .group-hover\:visible {
+    transition-delay: 100ms;
+}
+
+/* Prevent text selection on buttons */
+.select-none {
+    user-select: none;
+    -webkit-user-select: none;
+}
+</style>
 {% endblock %}
