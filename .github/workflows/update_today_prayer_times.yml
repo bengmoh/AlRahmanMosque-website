@@ -1,7 +1,8 @@
 name: Today Prayer Times Update
 on:
   schedule:
-    - cron: '30 23 * * *'  # 11:30 PM UTC / 6:30 PM Toronto
+    # job is 1 minute before midnight so that changes can be seen at midnight by users (job takes a minute or two)
+    - cron: '59 4 * * *'  # 04:59 AM UTC / 11:59 PM Toronto
   workflow_dispatch:  # Allows manual triggering
 
 jobs:

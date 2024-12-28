@@ -1,7 +1,8 @@
 name: Tomorrow Prayer Times Update
 on:
   schedule:
-    - cron: '30 10 * * *'  # 10:30 AM UTC / 5:30 AM Toronto
+    # job is 3 minutes after midnight to allow the athan website to update the times before scraping it
+    - cron: '3 5 * * *'  # 5:03 AM UTC / 00:03 AM Toronto 
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
