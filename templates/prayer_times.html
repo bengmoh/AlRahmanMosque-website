@@ -92,7 +92,7 @@
 
                     <!-- Jumu'ah Times -->
                     <div class="border-b border-gray-200 pb-3">
-                        <h3 class="text-xl font-semibold text-mosque-green mb-2">Jumu'ah Prayer Times</h3>
+                        <h3 class="text-xl font-semibold text-mosque-green mb-2">Jumu'ah Times</h3>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="bg-mosque-cream/20 rounded-lg p-2">
                                 <p class="text-sm text-gray-600">First Jumu'ah</p>
@@ -108,29 +108,17 @@
                     <!-- Programs -->
                     <div class="space-y-3">
                         <h3 class="text-xl font-semibold text-mosque-green">Programs</h3>
-                        
-                        <!-- Daily Hadith -->
+                        {% for title, (description, time) in programs.items() %}
                         <div class="bg-mosque-cream/10 rounded-lg p-3 hover:bg-mosque-cream/20 transition-colors">
                             <div class="flex justify-between items-center">
-                                <h4 class="font-medium text-mosque-green">Daily Hadith</h4>
-                                <span class="text-sm text-gray-600">After Fajr</span>
+                                <h4 class="font-medium text-mosque-green">{{ title }}</h4>
+                                <span class="text-sm text-gray-600">{{ time }}</span>
                             </div>
-                            <p class="text-gray-600 text-sm mt-1">
-                                Few yet life-changing words from the wisest person, the prophet ﷺ
-                            </p>
+                            <p class="text-gray-600 text-sm mt-1">{{ description }}</p>
                         </div>
-
-                        <!-- Weekly Quran Reflection -->
-                        <div class="bg-mosque-cream/10 rounded-lg p-3 hover:bg-mosque-cream/20 transition-colors">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-medium text-mosque-green">Weekly Quran Reflection</h4>
-                                <span class="text-sm text-gray-600">Saturday & Sunday After Fajr</span>
-                            </div>
-                            <p class="text-gray-600 text-sm mt-1">
-                                A 30-minute reflection of the beautiful Quran wherein we read few verses together, along with their tafseer (explanation), extracting meanings and lessons along the way
-                            </p>
-                        </div>
+                        {% endfor %}
                     </div>
+                    
 
                     <!-- WhatsApp Group Link -->
                     <div class="bg-mosque-green/5 rounded-lg p-3 border-l-4 border-mosque-green space-y-2">

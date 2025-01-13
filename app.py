@@ -19,19 +19,28 @@ with open("data/prayer_times/today_prayer_times.csv") as file:
     for row in reader:
         prayer, athan, iqama = row
         today[prayer] = (athan, iqama)
-    opening_time = add_time(today["Fajr"][1], -15, round_to_quarter=False)
-    closing_time = add_time(today["Isha"][1], 60, round_to_quarter=False)
-    time_changes = compare_iqama_times(
-        "data/prayer_times/today_prayer_times.csv",
-        "data/prayer_times/tomorrow_prayer_times.csv"
-    )
+
+programs = {}
+with open("data/programs.csv") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        title, description, time = row
+        programs[title] = (description, time)
+        
+opening_time = add_time(today["Fajr"][1], -15, round_to_quarter=False)
+closing_time = add_time(today["Isha"][1], 60, round_to_quarter=False)
+time_changes = compare_iqama_times(
+    "data/prayer_times/today_prayer_times.csv",
+    "data/prayer_times/tomorrow_prayer_times.csv"
+)
     
 @app.route('/')
 def index():
     return render_template("prayer_times.html", today=today,
                            opening_time=opening_time,
                            closing_time=closing_time,
-                           time_changes=time_changes)
+                           time_changes=time_changes,
+                           programs=programs)
 
 @app.route('/prayer-times')
 def prayer_times():
