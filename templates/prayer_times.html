@@ -3,142 +3,127 @@
 {% block content %}
 
 <!-- Main Content Grid -->
-<div class="container mx-auto px-4 py-8">
-    <div class="grid md:grid-cols-2 gap-8">
+<div class="container mx-auto px-1 md:px-2 py-4"> <!-- Reduced side padding -->
+    <div class="grid md:grid-cols-3 gap-2 md:gap-4"> <!-- Reduced gaps -->
+
         <!-- Prayer Times Section -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="bg-mosque-green py-4">
                 <h2 class="text-2xl font-bold text-center text-white">Today's Prayer Times</h2>
             </div>
-            <div class="p-4"> <!-- Reduced from p-6 -->
-                <!-- Prayer Times Table with optimized spacing -->
-                <table class="w-full">
+            <div class="p-4"> <!-- Adjusted padding -->
+                <table class="w-full text-lg"> <!-- Increased font size -->
                     <thead>
                         <tr class="bg-mosque-cream/10">
-                            <th class="py-3 px-6 text-left text-mosque-green font-semibold">Prayer</th>
-                            <th class="py-3 px-6 text-left text-mosque-green font-semibold">Begins</th>
-                            <th class="py-3 px-6 text-left text-mosque-green font-semibold">Iqama</th>
+                            <th class="py-2 px-3 text-left text-mosque-green font-semibold">Prayer</th>
+                            <th class="py-2 px-3 text-left text-mosque-green font-semibold">Begins</th>
+                            <th class="py-2 px-3 text-left text-mosque-green font-semibold">Iqama</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for prayer, (athan, iqama) in today.items() %}
                         <tr class="border-b border-gray-100 hover:bg-mosque-cream/5 transition-colors">
-                            <td class="py-2.5 px-6 font-medium">{{ prayer }}</td>
-                            <td class="py-2.5 px-6">{{ athan }}</td>
-                            <td class="py-2.5 px-6">{{ iqama }}</td>
+                            <td class="py-2 px-3 font-medium">{{ prayer }}</td>
+                            <td class="py-2 px-3">{{ athan }}</td>
+                            <td class="py-2 px-3">{{ iqama }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-
-                <!-- Opening Hours - Optimized spacing -->
-                <div class="mt-4 pt-3 border-t border-gray-200"> <!-- Reduced margins -->
+                <div class="mt-4 border-t border-gray-200 pt-4">
                     <h3 class="text-lg font-medium text-mosque-green text-center mb-2">Hours</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="text-center">
-                            <p class="text-sm text-gray-600">Opens</p>
-                            <p class="text-lg font-medium text-mosque-green">{{ opening_time }}</p>
+                            <p class="text-base text-gray-600">Opens</p>
+                            <p class="text-lg font-bold text-mosque-green">{{ opening_time }}</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-sm text-gray-600">Closes</p>
-                            <p class="text-lg font-medium text-mosque-green">{{ closing_time }}</p>
+                            <p class="text-base text-gray-600">Closes</p>
+                            <p class="text-lg font-bold text-mosque-green">{{ closing_time }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Announcements & Programs Section -->
+
+        <!-- Announcements Section -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <!-- Header -->
             <div class="bg-mosque-green py-4">
-                <h2 class="text-2xl font-bold text-center text-white">Announcements & Programs</h2>
+                <h2 class="text-2xl font-bold text-center text-white">Announcements</h2>
             </div>
-
-            <!-- Scrollable Container -->
-            <div class="overflow-y-auto" style="height: 550px; scrollbar-width: thin; scrollbar-color: #0B4D26 #e5e7eb;">
-                <div class="p-4 space-y-4">
-                    <!-- Time Changes Alert (Conditional) -->
-                    {% if time_changes %}
-                    <div class="bg-mosque-gold/10 rounded-lg p-3 border-l-4 border-mosque-gold">
-                        <h3 class="text-lg font-semibold text-mosque-green mb-2">
-                            Prayer Time Changes for Tomorrow
-                        </h3>
-                        <div class="space-y-2">
-                            {% for prayer, (old_time, new_time) in time_changes.items() %}
-                            <div class="flex flex-col space-y-1">
-                                <!-- Time Change Display -->
-                                <div class="flex items-center justify-between text-gray-600">
-                                    <span class="font-medium">{{ prayer }}</span>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="line-through">{{ old_time }}</span>
-                                        <span class="text-mosque-green font-medium">→ {{ new_time }}</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Operational Notes -->
-                                {% if prayer == 'Fajr' %}
-                                <div class="bg-mosque-green/5 rounded p-2 text-sm">
-                                    <p class="text-mosque-green">
-                                        <span class="font-medium">Note:</span> Mosque opens 15 min before Fajr iqama
-                                    </p>
-                                </div>
-                                {% endif %}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    <!-- Jumu'ah Times -->
-                    <div class="border-b border-gray-200 pb-3">
-                        <h3 class="text-xl font-semibold text-mosque-green mb-2">Jumu'ah Times</h3>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-mosque-cream/20 rounded-lg p-2">
-                                <p class="text-sm text-gray-600">First Jumu'ah</p>
-                                <p class="text-lg font-medium text-mosque-green">12:15 PM</p>
-                            </div>
-                            <div class="bg-mosque-cream/20 rounded-lg p-2">
-                                <p class="text-sm text-gray-600">Second Jumu'ah</p>
-                                <p class="text-lg font-medium text-mosque-green">1:15 PM</p>
+            <div class="p-4 space-y-4 overflow-y-auto" style="max-height: 700px; scrollbar-width: thin; scrollbar-color: #0B4D26 #e5e7eb;"> <!-- Enabled scroll -->
+                {% if time_changes %}
+                <div class="bg-mosque-gold/10 rounded-lg p-4 border-l-4 border-mosque-gold">
+                    <h3 class="text-lg font-semibold text-mosque-green">Prayer Time Changes Tomorrow</h3>
+                    {% for prayer, (old_time, new_time) in time_changes.items() %}
+                    <div class="mt-4">
+                        <div class="flex justify-between text-gray-600">
+                            <span class="font-medium">{{ prayer }}</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="line-through">{{ old_time }}</span>
+                                <span class="text-mosque-green font-medium">→ {{ new_time }}</span>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
 
-                    <!-- Programs -->
-                    <div class="space-y-3">
-                        <h3 class="text-xl font-semibold text-mosque-green">Programs</h3>
-                        {% for title, (description, time) in programs.items() %}
-                        <div class="bg-mosque-cream/10 rounded-lg p-3 hover:bg-mosque-cream/20 transition-colors">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-medium text-mosque-green">{{ title }}</h4>
-                                <span class="text-sm text-gray-600">{{ time }}</span>
-                            </div>
-                            <p class="text-gray-600 text-sm mt-1">{{ description }}</p>
+                <!-- Jumu'ah Times -->
+                <div>
+                    <h3 class="text-lg font-semibold text-mosque-green">Jumu'ah Times</h3>
+                    <div class="grid grid-cols-2 gap-4 mt-3">
+                        <div class="bg-mosque-cream/20 rounded-lg p-4">
+                            <p class="text-base text-gray-600">First</p>
+                            <p class="text-lg font-bold text-mosque-green">12:30 PM</p>
                         </div>
-                        {% endfor %}
+                        <div class="bg-mosque-cream/20 rounded-lg p-4">
+                            <p class="text-base text-gray-600">Second</p>
+                            <p class="text-lg font-bold text-mosque-green">1:30 PM</p>
+                        </div>
                     </div>
-                    
+                </div>
 
-                    <!-- WhatsApp Group Link -->
-                    <div class="bg-mosque-green/5 rounded-lg p-3 border-l-4 border-mosque-green space-y-2">
-                        <p class="text-gray-600">Stay updated with our programs and announcements</p>
-                        <a href="https://chat.whatsapp.com/Ljl11RSPybnGsxYYh2spVI" 
-                        target="_blank"
-                        rel="noopener noreferrer" 
-                        class="flex items-center justify-center w-full bg-mosque-green text-white px-4 py-3 rounded-lg hover:bg-mosque-light transition-colors group">
-                            <span class="font-medium">Join Our WhatsApp Group</span>
-                            <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" 
-                                fill="currentColor" 
-                                viewBox="0 0 24 24" 
-                                aria-hidden="true">
-                                <path d="M17.293 12L12.146 6.854a.5.5 0 11.708-.708l5.353 5.354a.5.5 0 010 .708l-5.353 5.354a.5.5 0 01-.708-.708L17.293 12z"/>
-                            </svg>
-                        </a>
-                    </div>
+                <!-- Ramadan Announcement -->
+                <div class="bg-mosque-gold/10 rounded-lg p-4 border-l-4 border-mosque-gold">
+                    <h3 class="text-lg font-bold text-mosque-green mb-2">Ramadan is approaching!</h3>
+                    <p class="text-base text-gray-800 mb-4">
+                        Donations are needed to provide daily Iftar for our community.
+                    </p>
+                    <p class="text-lg font-medium text-mosque-green text-right mb-2">
+                        مَنْ فَطَّرَ صَائمًا، كانَ لَهُ مِثْلُ أَجْرِهِ غَيْرَ أَنَّهُ لاَ يَنْقُصُ مِنْ أجْر الصَّائمِ شيءٌ
+                    </p>
+                    <p class="text-sm text-gray-800 text-right mb-2 italic">
+                        رواه الترمذي وقالَ: حديثٌ حسنٌ صحيحٌ
+                    </p>
+                    <p class="text-base text-gray-800 text-left">
+                        "Whoever provides Iftar for someone fasting will receive a reward equal to theirs, without reducing the fasting person's reward in any way."
+                    </p>
+                    <p class="text-sm text-gray-800 text-left italic">
+                        Narrated by At-Tirmidhi, who said: "This is a good and authentic Hadeeth."
+                    </p>
                 </div>
             </div>
         </div>
+
+        <!-- Programs Section -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-mosque-green py-4">
+                <h2 class="text-2xl font-bold text-center text-white">Programs</h2>
+            </div>
+            <div class="p-4 space-y-4 overflow-y-auto" style="max-height: 700px; scrollbar-width: thin; scrollbar-color: #0B4D26 #e5e7eb;"> <!-- Enabled scroll -->
+                {% for title, (description, time) in programs.items() %}
+                <div class="bg-mosque-cream/10 rounded-lg p-4 hover:bg-mosque-cream/20 transition-colors">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-mosque-green">{{ title }}</h4>
+                        <span class="text-base text-gray-600">{{ time }}</span>
+                    </div>
+                    <p class="text-gray-600 mt-2 text-base">{{ description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -159,4 +144,5 @@
         background: #147A3B;
     }
 </style>
+
 {% endblock %}
