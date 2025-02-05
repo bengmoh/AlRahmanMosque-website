@@ -4,7 +4,8 @@ import csv
 
 app = Flask(__name__)
 
-@app.before_request
+# Remove comment if redirecting from non www. to www. domain
+#@app.before_request
 def redirect_non_www():
     if request.host.startswith('www.'):
         return None  # Continue with the request if it's already on www.
