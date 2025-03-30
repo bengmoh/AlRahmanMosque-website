@@ -1,28 +1,31 @@
 from flask import Flask, render_template, request, redirect
 from python_scripts.calculations import add_time, compare_iqama_times
 import csv
+import getpass
+# Find username of the current user
+username = getpass.getuser()
 
 app = Flask(__name__)
 
-# Remove comment if redirecting to a domain starting with www.
 @app.before_request
 def redirect_non_www():
-    if request.host.startswith('www.'):
-        return None  # Continue with the request if it's already on www.
+    if request.host.startswith('www.') or '127.0.0.1' in request.host:
+        return None  # Don't redirect for localhost
 
     # Redirect to the www. subdomain
     new_url = request.url.replace('://', '://www.')
     return redirect(new_url, code=301)
 
+
 today = {}
-with open("data/prayer_times/today_prayer_times.csv") as file:
+with open(fr"C:\Users\{username}\Downloads\AlRahmanMosque-website-main\AlRahmanMosque-website-main\data\prayer_times\today_prayer_times.csv") as file:
     reader = csv.reader(file)
     for row in reader:
         prayer, athan, iqama = row
         today[prayer] = (athan, iqama)
 
 programs = {}
-with open("data/programs.csv") as file:
+with open(fr"C:\Users\{username}\Downloads\AlRahmanMosque-website-main\AlRahmanMosque-website-main\data\programs.csv") as file:
     reader = csv.reader(file)
     for row in reader:
         title, description, time = row
@@ -56,3 +59,4 @@ def contact():
     return render_template("contact.html",
                            opening_time=opening_time,
                            closing_time=closing_time)
+app.run(debug=True)
