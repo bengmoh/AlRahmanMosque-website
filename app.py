@@ -26,35 +26,26 @@ if os.path.exists("data/prayer_times/today_prayer_times.csv"):
 
 os_type=platform.system()
 
-if os_type=="Linux":
+if os_type == "Windows":
+    base_dir = f'C:\\Users\\{user_name}'
+elif os_type == "Linux":
+    base_dir = f'/home/{user_name}'
+elif os_type == "Darwin":  
+    base_dir = f'/Users/{user_name}'
+else:
+    raise Exception("Unsupported OS")
 
 
-    directory = fr'/home/{user_name}'
+def find_file(filename):
+    for root, dirs, files in os.walk(base_dir):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
 
-
-    for root, dirs, files in os.walk(directory):
-        if "today_prayer_times.csv" in files:
-            files_path1 = os.path.join(root, "today_prayer_times.csv")
-            break
-
-    for root, dirs, files in os.walk(directory):
-        if "programs.csv" in files:
-            files_path2 = os.path.join(root, "programs.csv")
-            break
-
-
-if os_type=="Windows":
-    directory = f'C:\\Users\\{user_name}'
-    for root, dirs, files in os.walk(directory):
-        if "today_prayer_times.csv" in files:
-            files_path1 = os.path.join(root, "today_prayer_times.csv")
-            break
-
-
-    for root, dirs, files in os.walk(directory):
-        if "programs.csv" in files:
-            files_path2 = os.path.join(root, "programs.csv")
-            break
+files_path1 = find_file("today_prayer_times.csv")
+files_path2 = find_file("programs.csv")
+if not files_path1 or not files_path2:
+    raise FileNotFoundError("Required CSV files not found.")
 
 today = {}
 with open(files_path1) as file:
