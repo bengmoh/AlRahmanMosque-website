@@ -4,8 +4,11 @@ import csv
 import getpass
 import os 
 import pandas as pd
+import platform
+
+
 # Find username of the current user
-username = getpass.getuser()
+user_name = getpass.getuser()
 
 app = Flask(__name__)
 
@@ -20,15 +23,48 @@ def redirect_non_www():
 if os.path.exists("data/prayer_times/today_prayer_times.csv"):
     df = pd.read_csv("data/prayer_times/today_prayer_times.csv")
 
+
+os_type=platform.system()
+
+if os_type=="Linux":
+
+
+    directory = fr'/home/{user_name}'
+
+
+    for root, dirs, files in os.walk(directory):
+        if "today_prayer_times.csv" in files:
+            files_path1 = os.path.join(root, "today_prayer_times.csv")
+            break
+
+    for root, dirs, files in os.walk(directory):
+        if "programs.csv" in files:
+            files_path2 = os.path.join(root, "programs.csv")
+            break
+
+
+if os_type=="Windows":
+    directory = f'C:\\Users\\{user_name}'
+    for root, dirs, files in os.walk(directory):
+        if "today_prayer_times.csv" in files:
+            files_path1 = os.path.join(root, "today_prayer_times.csv")
+            break
+
+
+    for root, dirs, files in os.walk(directory):
+        if "programs.csv" in files:
+            files_path2 = os.path.join(root, "programs.csv")
+            break
+
 today = {}
-with open(fr"C:\Users\{username}\Downloads\AlRahmanMosque-website-main\AlRahmanMosque-website-main\data\prayer_times\today_prayer_times.csv") as file:
+with open(files_path1) as file:
     reader = csv.reader(file)
     for row in reader:
         prayer, athan, iqama = row
         today[prayer] = (athan, iqama)
 
 programs = {}
-with open(fr"C:\Users\{username}\Downloads\AlRahmanMosque-website-main\AlRahmanMosque-website-main\data\programs.csv") as file:
+with open(files_path2) as file:
     reader = csv.reader(file)
     for row in reader:
         title, description, time = row
