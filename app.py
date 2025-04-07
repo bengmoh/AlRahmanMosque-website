@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect
 from python_scripts.calculations import add_time, compare_iqama_times
 import csv
 import getpass
+import os 
+import pandas as pd
 # Find username of the current user
 username = getpass.getuser()
 
@@ -15,7 +17,8 @@ def redirect_non_www():
     # Redirect to the www. subdomain
     new_url = request.url.replace('://', '://www.')
     return redirect(new_url, code=301)
-
+if os.path.exists("data/prayer_times/today_prayer_times.csv"):
+    df = pd.read_csv("data/prayer_times/today_prayer_times.csv")
 
 today = {}
 with open(fr"C:\Users\{username}\Downloads\AlRahmanMosque-website-main\AlRahmanMosque-website-main\data\prayer_times\today_prayer_times.csv") as file:
