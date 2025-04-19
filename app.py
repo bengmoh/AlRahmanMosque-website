@@ -1,28 +1,61 @@
 from flask import Flask, render_template, request, redirect
 from python_scripts.calculations import add_time, compare_iqama_times
 import csv
+import getpass
+import os 
+import pandas as pd
+import platform
+
+
+# Find username of the current user
+user_name = getpass.getuser()
 
 app = Flask(__name__)
 
-# Remove comment if redirecting to a domain starting with www.
 @app.before_request
 def redirect_non_www():
-    if request.host.startswith('www.'):
-        return None  # Continue with the request if it's already on www.
+    if request.host.startswith('www.') or '127.0.0.1' in request.host:
+        return None  # Don't redirect for localhost
 
     # Redirect to the www. subdomain
     new_url = request.url.replace('://', '://www.')
     return redirect(new_url, code=301)
+if os.path.exists("data/prayer_times/today_prayer_times.csv"):
+    df = pd.read_csv("data/prayer_times/today_prayer_times.csv")
+
+
+os_type=platform.system()
+
+if os_type == "Windows":
+    base_dir = f'C:\\Users\\{user_name}'
+elif os_type == "Linux":
+    base_dir = f'/home/{user_name}'
+elif os_type == "Darwin":  
+    base_dir = f'/Users/{user_name}'
+else:
+    raise Exception("Unsupported OS")
+
+
+def find_file(filename):
+    for root, dirs, files in os.walk(base_dir):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
+
+files_path1 = find_file("today_prayer_times.csv")
+files_path2 = find_file("programs.csv")
+if not files_path1 or not files_path2:
+    raise FileNotFoundError("Required CSV files not found.")
 
 today = {}
-with open("data/prayer_times/today_prayer_times.csv") as file:
+with open(files_path1) as file:
     reader = csv.reader(file)
     for row in reader:
         prayer, athan, iqama = row
         today[prayer] = (athan, iqama)
 
 programs = {}
-with open("data/programs.csv") as file:
+with open(files_path2) as file:
     reader = csv.reader(file)
     for row in reader:
         title, description, time = row
@@ -56,3 +89,4 @@ def contact():
     return render_template("contact.html",
                            opening_time=opening_time,
                            closing_time=closing_time)
+app.run(debug=True)
