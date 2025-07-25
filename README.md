@@ -28,7 +28,7 @@ This project is a Flask-based website for Al-Rahman Mosque, designed to provide 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/alrahman-mosque-website.git
+   git clone https://github.com/bengmoh/AlRahmanMosque-website.git
 
 2. Install dependencies:
    ```bash
